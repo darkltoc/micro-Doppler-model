@@ -74,7 +74,7 @@ specanalyzer = dsp.SpectrumAnalyzer('SampleRate',Fs,...
     'ShowLegend',true);
 
 rng(2012);
-Nsweep = 64;
+Nsweep = 2^12;
 xr = complex(zeros(waveform.SampleRate*waveform.SweepTime,Nsweep));
 
 % simulation loop
@@ -96,7 +96,7 @@ for m = 1:Nsweep
     dechirpsig = dechirp(txsig,sig);
 
     % Visualize the spectrum
-%     specanalyzer([txsig dechirpsig]);
+    specanalyzer([txsig dechirpsig]);
 
     xr(:,m) = dechirpsig;
 end
