@@ -1,4 +1,4 @@
-classdef Linear
+classdef TraceReclinear
     %LINEAR Summary of this class goes here
     %   Detailed explanation goes here
     
