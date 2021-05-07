@@ -13,7 +13,7 @@ classdef Target
     methods (Access = public)
         function obj = Target(position, traceType)
             if nargin == 1
-                traceType = Linear;
+                traceType = TraceReclinear;
             end
             
             obj.traceType_ = traceType;
@@ -71,11 +71,11 @@ classdef Target
                 'markerfacecolor', 'k', ...
                 'markersize', 5);
             % Orientation array
-            ang = obj.traceType_.orientation( t(1, 1) );
-            obj.handlePlot_(end + 1) = plot3(ax, ...
+            ang = obj.traceType_.orientation( t(1, 1) ); 
+            obj.handlePlot_(end + 1) = plot3(ax, ... 
                 pos(1) + [ 0 cosd(ang(1)) ], ...
                 pos(2) + [ 0 sind(ang(1)) ], ...
-                pos(3) + [0 0], 'r', 'linewidth', 2);
+                pos(3) + [0 0], 'r', 'linewidth', 2);           % соответственно, оси XYZ
             obj.draw(t, ax);
         end
         
