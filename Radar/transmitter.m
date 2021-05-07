@@ -2,7 +2,7 @@ classdef transmitter < handle
     %TRANSMITTER Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties
+    properties (Access = public)
         rangeResolution_            % разрешение по дальности
         v_max_                      % максимальная скорость движения объекта, переводим в м/с
         operationalFrequency_       % central/operating frequency
@@ -37,7 +37,7 @@ classdef transmitter < handle
             if nargin == 1
                 operationalFrequency = 77e9;
                 v_max = 230;
-                rangeResolution = 1;
+                rangeResolution = .5;
                 rspeed = 0;
                 antAperture = 6.06e-4;
                 rxNf = 4.5;
