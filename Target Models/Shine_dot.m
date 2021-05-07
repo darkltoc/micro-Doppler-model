@@ -3,8 +3,8 @@ classdef Shine_dot < Target
     %   posArr[n][x y z]
     
     properties
-        bladeSize_  = 1;
-        rotFreq_    = 10;
+        bladeSize_  = 1; % расстояние "лопастей" от центра объекта
+        rotFreq_    = 10; % частота вращения "лопастей"
     end
     
     methods
@@ -23,6 +23,7 @@ classdef Shine_dot < Target
             obj.rotFreq_    = rotFreq;
         end
         
+        % posArr - массив значений положения точек 
         function posArr = pointState( obj, t )
             %METHOD1 Summary of this method goes here
             %   Detailed explanation goes here
@@ -33,10 +34,10 @@ classdef Shine_dot < Target
             posArr = zeros(size(t, 1), 2, 3);
             posArr(:, 1, :) = [   cos( 2*pi*obj.rotFreq_*t ) ...
                 sin( 2*pi*obj.rotFreq_*t ) ...
-                zeros(size(t)) ] * obj.bladeSize_;
+                zeros(size(t)) ] * obj.bladeSize_; % массив положений "левой" "лопасти" блестящей точки
             posArr(:, 2, :) = [   cos( 2*pi*obj.rotFreq_*t ) ...
                 sin( 2*pi*obj.rotFreq_*t ) ...
-                zeros(size(t)) ] * -obj.bladeSize_;
+                zeros(size(t)) ] * -obj.bladeSize_; % массив положений "правой" "лопасти" блестящей точки
         end
         
         function draw( obj, t, ax )
