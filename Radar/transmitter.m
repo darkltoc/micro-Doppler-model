@@ -71,6 +71,17 @@ classdef transmitter < handle
             obj.txMotion_ = phased.Platform('InitialPosition',[0;0;0.5],...
             'Velocity',[obj.radarSpeed_;0;0]);
         end
+        
+       % --- pulse sequence start positions in 't' series пробно добавим
+        function d = pulseTrigger( obj, t)
+            for k = 1:size(t, 1)
+                d = (ceil( t(k,1)/obj.sweepTime_ ) * obj.sweepTime_ : obj.sweepTime_ : t(k,end) )';
+                if ~isempty(d) 
+                    return
+                end
+            end
+        end
+        
     end
 end
 
