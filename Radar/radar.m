@@ -39,52 +39,9 @@ classdef radar
             
         end
         
-        
-        
-        % необходимо добавить функцию или что-то для излучения и вывода.
-        
-        
-%         function imageTrace( obj, tracePulses )
-%             imagesc( obj.rangeLim_, ...
-%                      [ 0  size(tracePulses,1) ] * obj.transmitter_.period_, ...
-%                      real(tracePulses))
-%         end
+       
     end        
 end
 
-% channel 1 - received signal, channel 2 - dechirped signal
-% From the spectrum scope, one can see that although the received signal is wideband (channel 1),
-% sweeping through the entire bandwidth, the dechirped signal becomes narrowband (channel 2).
-% specanalyzer = dsp.SpectrumAnalyzer('SampleRate',Fs,...
-%     'PlotAsTwoSidedSpectrum',true,...
-%     'Title','Spectrum for received and dechirped signal',...
-%     'ShowLegend',true);
-% 
-% rng(2012);
-% Nsweep = 64;
-% xr = complex(zeros(waveform.SampleRate*waveform.SweepTime,Nsweep));
-% 
-% % simulation loop
-% for m = 1:Nsweep
-%     % Update radar and target positions
-%     [radar_pos,radar_vel] = radarmotion(waveform.SweepTime);
-%     [tgt_pos,tgt_vel] = tg_motion(waveform.SweepTime);
-% 
-%     % Transmit FMCW waveform
-%     sig = waveform();
-%     txsig = transmitter(sig);
-% 
-%     % Propagate the signal and reflect off the target
-%     txsig = channel(txsig,radar_pos,tgt_pos,radar_vel,tgt_vel);
-%     txsig = tg_target(txsig);
-% 
-%     % Dechirp the received radar return
-%     txsig = receiver(txsig);
-%     dechirpsig = dechirp(txsig,sig);
-% 
-%     % Visualize the spectrum
-% %     specanalyzer([txsig dechirpsig]);
-% 
-%     xr(:,m) = dechirpsig;
-% end
+
 
