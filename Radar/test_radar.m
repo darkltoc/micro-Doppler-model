@@ -6,6 +6,12 @@ close all
 tr = transmitter(100); % rangeMax 
 rdr = radar( tr );
 % % Visualize the spectrum
+
+% channel 1 - received signal, channel 2 - dechirped signal
+% From the spectrum scope, one can see that although the received signal is wideband (channel 1),
+% sweeping through the entire bandwidth, the dechirped signal becomes narrowband (channel 2).
+
+
 %     specanalyzer([txsig dechirpsig]);
 specanalyzer = dsp.SpectrumAnalyzer('SampleRate',tr.sampleRate_,...
     'PlotAsTwoSidedSpectrum',true,...
@@ -24,7 +30,7 @@ for m = 1:Nsweep
     [tgt_pos,tgt_vel] = rdr.tgMotion_(tr.waveform_.SweepTime);
 
     % Transmit FMCW waveform
-    sig = tr.waveform_(); % too Too many input arguments. Expected 0 (in addition to System object), g
+    sig = tr.waveform_();  
     txsig = tr.transmitter_(sig);
 
     % Propagate the signal and reflect off the target
@@ -40,4 +46,5 @@ for m = 1:Nsweep
 
     xr(:,m) = dechirpsig;
 end
+
 
