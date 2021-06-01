@@ -20,7 +20,7 @@ specanalyzer = dsp.SpectrumAnalyzer('SampleRate',tr.sampleRate_,...
     
        
 rng(2012);
-Nsweep = 2^13;
+Nsweep = 2^10;
 xr = complex(zeros(tr.waveform_.SampleRate*tr.waveform_.SweepTime,Nsweep));
 
 % simulation loop
@@ -42,9 +42,19 @@ for m = 1:Nsweep
     dechirpsig = dechirp(txsig,sig);
 
     % Visualize the spectrum
-    specanalyzer([txsig dechirpsig])    % specanalyzer([txsig dechirpsig]);
+    specanalyzer([txsig dechirpsig])    
 
     xr(:,m) = dechirpsig;
 end
 
+rngdopresp = phased.RangeDopplerResponse('PropagationSpeed',tr.c_light,...
+    'DopplerOutput','Speed','OperatingFrequency',tr.operationalFrequency_,...
+    'SampleRate',tr.sampleRate_,'RangeMethod','FFT','SweepSlope',tr.sweep_slope_,...
+    'RangeFFTLengthSource','Property','RangeFFTLength',2048,...
+    'DopplerFFTLengthSource','Property','DopplerFFTLength',256);
+
+clf;
+plotResponse(rngdopresp,xr);                     % Plot range Doppler map
+axis([-tr.v_max_ tr.v_max_ 0 tr.rangeMax_])
+clim = caxis;
 
