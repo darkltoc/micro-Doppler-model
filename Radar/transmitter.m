@@ -26,6 +26,7 @@ classdef transmitter < handle
         transmitter_
         receiver_
         txMotion_
+        rdrInitpos_
     end
     
     properties (Constant = true)
@@ -33,14 +34,16 @@ classdef transmitter < handle
     end
     
     methods
-        function obj = transmitter(rangeMax ,operationalFrequency, v_max,rangeResolution, rspeed, antAperture, rxNf)
+        function obj = transmitter(rangeMax ,operationalFrequency, v_max,...
+                rangeResolution, rspeed, antAperture, rxNf, radarInitialPosition)
             if nargin == 1
                 operationalFrequency = 77e9;
                 v_max = 230;
                 rangeResolution = .5;
-                rspeed = 0;
+                rspeed = [0;0;0];
                 antAperture = 6.06e-4;
                 rxNf = 4.5;
+                radarInitialPosition = [0;0;0];
             end
             %TRANSMITTER Construct an instance of this class
             %   Detailed explanation goes here
@@ -63,25 +66,15 @@ classdef transmitter < handle
             obj.rangeMax_ = rangeMax;
             obj.antAperture_ = antAperture;
             obj.rxNf_ = rxNf;
+            obj.rdrInitpos_ = radarInitialPosition;
             obj.waveform_ = phased.FMCWWaveform('SweepTime',obj.sweepTime_,'SweepBandwidth', obj.bandwidth_,... 
             'SampleRate', obj.sampleRate_);
             obj.transmitter_ = phased.Transmitter('PeakPower',obj.txPpower_,'Gain',obj.txGain_);
             obj.receiver_ = phased.ReceiverPreamp('Gain',obj.rxGain_,'NoiseFigure',obj.rxNf_,...
             'SampleRate',obj.sampleRate_);
-            obj.txMotion_ = phased.Platform('InitialPosition',[0;0;0.5],...
-            'Velocity',[obj.radarSpeed_;0;0]);
+            obj.txMotion_ = phased.Platform('InitialPosition',obj.rdrInitpos_,...
+            'Velocity',obj.radarSpeed_);
         end
-        
-       % --- pulse sequence start positions in 't' series пробно добавим
-        function d = pulseTrigger( obj, t)
-            for k = 1:size(t, 1)
-                d = (ceil( t(k,1)/obj.sweepTime_ ) * obj.sweepTime_ : obj.sweepTime_ : t(k,end) )';
-                if ~isempty(d) 
-                    return
-                end
-            end
-        end
-        
     end
 end
 
