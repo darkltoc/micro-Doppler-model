@@ -3,11 +3,14 @@ classdef Copter < Target
     %   Detailed explanation goes here
     
     properties
-        Property1
+        velocity_
+        Nblades_
+        bladeLen_
+        bladeRate_
     end
     
     methods
-        function obj = Copter(inputArg1,inputArg2)
+        function obj = Copter(N,position,traceType,rotFrequency)
             %COPTER Construct an instance of this class
             %   Detailed explanation goes here
             obj.Property1 = inputArg1 + inputArg2;
