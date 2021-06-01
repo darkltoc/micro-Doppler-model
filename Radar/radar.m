@@ -4,7 +4,7 @@ classdef radar
     
     
     properties (Access = public)
-        transmitter_
+%         transmitter_
         tgtDist_            % дистанция до цели в метрах
         tgtSpeed_           % скорость цели в м/с
         tgtRCS_             % эпо цели в дБ
@@ -19,23 +19,23 @@ classdef radar
     end
     
     methods
-        function obj = radar(transmitter)
-            if nargin > 0 
-                distance = 43;
-                speed = 96;
+        function obj = radar(transmitter, distance, speed, RCS)
+            if nargin == 1 
+                distance = [43; 0; 0.5];
+                speed = [96; 0; 0];
             end            
-            obj.transmitter_ = transmitter; 
-            obj.sampleRate_ = obj.transmitter_.sampleRate_;
+%             obj.transmitter_ = transmitter; 
+            obj.sampleRate_ = transmitter.sampleRate_;
             obj.tgtDist_ = distance;
             obj.tgtSpeed_ = speed*1000/3600;
-            obj.tgtRCS_ = db2pow(min(10*log10(obj.tgtDist_)+5,20));
+            obj.tgtRCS_ = db2pow(min(10*log10(obj.tgtDist_(1))+5,20));
             obj.tgt_ = phased.RadarTarget('MeanRCS',obj.tgtRCS_,'PropagationSpeed',obj.c_light,...
-            'OperatingFrequency',obj.transmitter_.operationalFrequency_);
-            obj.tgMotion_ = phased.Platform('InitialPosition',[obj.tgtDist_;0;0.5],...
-            'Velocity',[obj.tgtSpeed_;0;0]);
+            'OperatingFrequency',transmitter.operationalFrequency_);
+            obj.tgMotion_ = phased.Platform('InitialPosition',obj.tgtDist_,...
+            'Velocity',obj.tgtSpeed_);
             obj.channel_ = phased.FreeSpace('PropagationSpeed',obj.c_light,...
-            'OperatingFrequency',obj.transmitter_.operationalFrequency_,...
-            'SampleRate',obj.transmitter_.sampleRate_,'TwoWayPropagation',true);
+            'OperatingFrequency',transmitter.operationalFrequency_,...
+            'SampleRate',transmitter.sampleRate_,'TwoWayPropagation',true);
             
         end
         
