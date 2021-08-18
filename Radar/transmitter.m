@@ -35,15 +35,11 @@ classdef transmitter < handle
     
     methods
         function obj = transmitter(rangeMax ,operationalFrequency, v_max,...
-                rangeResolution, rspeed, antAperture, rxNf, radarInitialPosition)
+                rangeResolution)
             if nargin == 1
                 operationalFrequency = 77e9;
                 v_max = 230;
                 rangeResolution = .5;
-                rspeed = [0;0;0];
-                antAperture = 6.06e-4;
-                rxNf = 4.5;
-                radarInitialPosition = [0;0;0];
             end
             %TRANSMITTER Construct an instance of this class
             %   Detailed explanation goes here

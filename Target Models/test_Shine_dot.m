@@ -7,7 +7,7 @@ close all;
 % угла места)
 % работоспособно
 
-t1 = Shine_dot(1, 5, [1 1 1], TraceReclinear([1 0 1], [10 0]));
+t1 = Shine_dot(1, 5, [1 0 1], Circle[1 1]); % TraceReclinear([1 0 1], [10 0])
 
 for t = 0:1e-3:1
     tic
